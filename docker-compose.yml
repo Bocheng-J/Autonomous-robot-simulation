@@ -1,0 +1,53 @@
+version: '2'
+
+services:
+    sim-global:
+        image: chalmersrevere/opendlv-sim-global-amd64:v0.0.5
+        network_mode: "host"
+        command: "/usr/bin/opendlv-sim-global --cid=111 --freq=10 --frame-id=0 --x=0.0 --yaw=0.2"
+
+    sim-motor-kiwi:
+        image: chalmersrevere/opendlv-sim-motor-kiwi-amd64:v0.0.6
+        network_mode: "host"
+        command: "/usr/bin/opendlv-sim-motor-kiwi --cid=111 --freq=50 --frame-id=0"
+
+    sim-ultrasonic-srf08-front:
+        image: chalmersrevere/opendlv-sim-ultrasonic-srf08-amd64:v0.0.4
+        network_mode: "host"
+        volumes:
+          - ./simulation-map.txt:/opt/simulation-map.txt
+        command: "/usr/bin/opendlv-sim-ultrasonic-srf08 --map-file=/opt/simulation-map.txt --x=0.2 --y=0.0 --yaw=0.0 --cid=111 --freq=10 --frame-id=0 --id=0"
+    
+    sim-ultrasonic-srf08-rear:
+        image: chalmersrevere/opendlv-sim-ultrasonic-srf08-amd64:v0.0.4
+        network_mode: "host"
+        volumes:
+          - ./simulation-map.txt:/opt/simulation-map.txt
+        command: "/usr/bin/opendlv-sim-ultrasonic-srf08 --map-file=/opt/simulation-map.txt --x=0.2 --y=0.0 --yaw=3.14 --cid=111 --freq=10 --frame-id=0 --id=1"
+    
+    sim-adc-bbblue-left:
+        image: chalmersrevere/opendlv-sim-adc-bbblue-amd64:v0.0.5
+        network_mode: "host"
+        volumes:
+          - ./simulation-map.txt:/opt/simulation-map.txt
+        command: "/usr/bin/opendlv-sim-adc-bbblue --map-file=/opt/simulation-map.txt --x=0.0 --y=0.1 --yaw=1.57 --cid=111 --freq=10 --frame-id=0 --id=2"
+    
+    sim-adc-bbblue-right:
+        image: chalmersrevere/opendlv-sim-adc-bbblue-amd64:v0.0.5
+        network_mode: "host"
+        volumes:
+          - ./simulation-map.txt:/opt/simulation-map.txt
+        command: "/usr/bin/opendlv-sim-adc-bbblue --map-file=/opt/simulation-map.txt --x=0.0 --y=-0.1 --yaw=-1.57 --cid=111 --freq=10 --frame-id=0 --id=3"
+    
+    logic-test-kiwi:
+        image: chalmersrevere/opendlv-logic-test-kiwi-amd64:v0.0.6
+        network_mode: "host"
+        command: "/usr/bin/opendlv-logic-test-kiwi --cid=111 --freq=10 --frame-id=0"
+
+    # Change to version 0.0.3 to get a path printed after the robot, but can make the browser a bit slow in VirtualBox
+    ui-default:
+        image: chalmersrevere/opendlv-ui-default-amd64:v0.0.2
+        network_mode: "host"
+        volumes:
+          - ./simulation-map.txt:/srv/http/simulation-map.txt
+        command: "--cid=111"
