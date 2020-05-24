@@ -1,4 +1,4 @@
-a) If the wheel speeds and the radius (R) of a two-wheeled differentially steered robot are known, its position can be obtained using the kinematic equations derived in the lectures. Consider a case where the robot starts at (x, y) = (0, 0), heading in the positive x direction (φ = 0) as shown in the figure.
+ If the wheel speeds and the radius (R) of a two-wheeled differentially steered robot are known, its position can be obtained using the kinematic equations derived in the lectures. Consider a case where the robot starts at (x, y) = (0, 0), heading in the positive x direction (φ = 0) as shown in the figure.
 
 Assuming that the wheel speeds vary as
 
